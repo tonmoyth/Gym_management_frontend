@@ -12,7 +12,6 @@ import {
 } from '@/types/api.types';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';
 import { Modal, ConfirmDialog } from '@/components/ui/Modal';
 import { StatusBadge } from '@/components/ui/Badge';
 import { EmptyState, CardSkeleton } from '@/components/ui/EmptyState';
@@ -27,7 +26,6 @@ import {
   Search,
   AlertCircle,
   Building,
-  CheckCircle2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
@@ -64,7 +62,7 @@ export function PaymentAccountManager({
   const [isDefault, setIsDefault] = useState(false);
 
   // Fetch accounts
-  const { data: accountsRes, isLoading, error } = useQuery({
+  const { data: accountsRes, isLoading } = useQuery({
     queryKey: ['payment-accounts', typeFilter, searchTerm],
     queryFn: async () => {
       const res = await paymentAccountApi.getAll({

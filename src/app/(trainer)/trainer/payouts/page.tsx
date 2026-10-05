@@ -1,13 +1,12 @@
 'use strict';
 'use client';
 
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { payoutApi } from '@/lib/api/payout.api';
 import { formatCurrency } from '@/lib/utils/formatCurrency';
 import { StatusBadge } from '@/components/ui/Badge';
 import { TableSkeleton, EmptyState } from '@/components/ui/EmptyState';
-import { DollarSign, Clock, CheckCircle2, Building2 } from 'lucide-react';
+import { DollarSign, Building2 } from 'lucide-react';
 import { TrainerPayout } from '@/types/api.types';
 
 export default function TrainerPayoutsPage() {

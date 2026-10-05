@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { PaymentAccountManager } from '@/components/payment/PaymentAccountManager';
 
 export default function TrainerPaymentAccountsPage() {

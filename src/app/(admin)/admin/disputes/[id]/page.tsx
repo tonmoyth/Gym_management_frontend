@@ -1,10 +1,9 @@
 'use strict';
 'use client';
 
-import React, { use, useState } from 'react';
+import { use, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
-import { formatCurrency } from '@/lib/utils/formatCurrency';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
@@ -16,14 +15,10 @@ import {
   CheckCircle2, 
   XCircle, 
   User, 
-  Calendar, 
-  DollarSign,
   AlertCircle,
-  ShieldAlert,
   CreditCard,
   Ban,
   Building2,
-  Dumbbell
 } from 'lucide-react';
 import Link from 'next/link';
 

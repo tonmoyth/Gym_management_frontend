@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { subscriptionPlanApi, CreateSubscriptionPlanDto } from '@/lib/api/subscriptionPlan.api';
 import { subscriptionPaymentApi } from '@/lib/api/subscriptionPayment.api';
@@ -19,7 +19,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Select } from '@/components/ui/Select';
 import { Modal, ConfirmDialog } from '@/components/ui/Modal';
 import { Tabs } from '@/components/ui/Tabs';
-import { StatusBadge, Badge } from '@/components/ui/Badge';
+import { StatusBadge } from '@/components/ui/Badge';
 import { TableSkeleton, CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import {
   Layers,
@@ -34,14 +34,8 @@ import {
   Copy,
   ExternalLink,
   AlertCircle,
-  Clock,
-  DollarSign,
   Search,
-  Filter,
   Eye,
-  CreditCard,
-  ShieldCheck,
-  XCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 

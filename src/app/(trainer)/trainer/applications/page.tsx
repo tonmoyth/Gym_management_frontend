@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { jobPostApi } from '@/lib/api/jobPost.api';
 import { Button } from '@/components/ui/Button';

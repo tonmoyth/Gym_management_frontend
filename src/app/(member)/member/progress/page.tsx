@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { progressApi } from '@/lib/api/progress.api';
 import { ProgressLog } from '@/types/api.types';
 import { Button } from '@/components/ui/Button';
@@ -11,7 +11,6 @@ import {
   Scale,
   Activity,
   Calendar,
-  Dumbbell,
   RefreshCw,
   UserCheck,
   ShieldCheck,

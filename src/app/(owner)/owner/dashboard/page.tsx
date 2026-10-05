@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { businessApi, BusinessDashboardData } from '@/lib/api/business.api';
@@ -16,16 +16,11 @@ import {
   QrCode,
   DollarSign,
   Award,
-  AlertCircle,
   Clock,
   Wrench,
-  Star,
   ArrowRight,
-  ShieldAlert,
   Calendar,
   CreditCard,
-  Copy,
-  Check,
 } from 'lucide-react';
 
 export default function OwnerDashboardPage() {
@@ -33,7 +28,6 @@ export default function OwnerDashboardPage() {
   const [business, setBusiness] = useState<Business | null>(null);
   const [dashboard, setDashboard] = useState<BusinessDashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [copiedReferral, setCopiedReferral] = useState(false);
 
   useEffect(() => {
     async function loadData() {

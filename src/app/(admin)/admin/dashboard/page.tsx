@@ -1,11 +1,9 @@
 'use strict';
 'use client';
 
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
 import { formatCurrency } from '@/lib/utils/formatCurrency';
-import { Button } from '@/components/ui/Button';
 import { CardSkeleton } from '@/components/ui/EmptyState';
 import { 
   Building2, 
@@ -15,9 +13,7 @@ import {
   ShieldCheck, 
   AlertTriangle, 
   FileWarning, 
-  TrendingUp, 
   ArrowRight,
-  Sparkles 
 } from 'lucide-react';
 import Link from 'next/link';
 

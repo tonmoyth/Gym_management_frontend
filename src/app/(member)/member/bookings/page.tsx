@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { membershipApi } from '@/lib/api/membership.api';
 import { classScheduleApi } from '@/lib/api/classSchedule.api';
@@ -345,7 +345,6 @@ export default function MemberBookingsPage() {
                 {myClassBookings.map((booking) => {
                   const schedule = booking.classSchedule;
                   const isCancelled = booking.status === 'CANCELLED';
-                  const isUpcoming = schedule ? new Date(schedule.startTime) > new Date() : false;
                   const isCancelling = cancellingBookingId === booking.id;
 
                   return (

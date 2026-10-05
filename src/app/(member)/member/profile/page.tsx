@@ -20,7 +20,6 @@ import {
   Star,
   CheckCircle2,
   AlertCircle,
-  MessageSquare,
   Building2,
   Loader2,
 } from 'lucide-react';

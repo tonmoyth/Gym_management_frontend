@@ -1,16 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
+import { useState, useEffect, Suspense, type FormEvent } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { authApi } from '@/lib/api/auth.api';
 import { businessApi } from '@/lib/api/business.api';
-import { AlertCircle, CheckCircle2, MailCheck } from 'lucide-react';
+import { AlertCircle, CheckCircle2, MailCheck, ArrowRight, Loader2 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/useAuth';
 
 function VerifyEmailContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { refreshUser } = useAuth();
 
@@ -26,7 +23,7 @@ function VerifyEmailContent() {
     if (qEmail) setEmail(qEmail);
   }, [searchParams]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
@@ -89,74 +86,91 @@ function VerifyEmailContent() {
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center mx-auto mb-3">
-          <MailCheck className="w-6 h-6" />
+      <div className="text-center space-y-2">
+        <div className="w-14 h-14 rounded-2xl bg-orange-600/15 border border-orange-500/20 text-orange-400 flex items-center justify-center mx-auto shadow-lg shadow-orange-600/10">
+          <MailCheck className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-          Verify your email
+        <h2 className="text-2xl font-black text-white tracking-tight">
+          Verify Your Email
         </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-          We sent a 6-digit verification code to {email || 'your email'}
+        <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+          আপনার ইমেইলে ৬ ডিজিটের ভেরিফিকেশন ওটিপি কোড পাঠানো হয়েছে: <span className="text-orange-400 font-semibold">{email || 'your email'}</span>
         </p>
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-600 dark:text-red-400">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-orange-600/10 border border-orange-500/30 text-xs font-medium text-orange-400">
+          <AlertCircle className="w-4 h-4 shrink-0 text-orange-500" />
           <span>{error}</span>
         </div>
       )}
 
       {successMessage && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-600 dark:text-emerald-400">
-          <CheckCircle2 className="w-4 h-4 shrink-0" />
+        <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-orange-600/10 border border-orange-500/30 text-xs font-medium text-orange-400">
+          <CheckCircle2 className="w-4 h-4 shrink-0 text-orange-500" />
           <span>{successMessage}</span>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {!searchParams.get('email') && (
-          <Input
-            label="Email Address"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <div className="space-y-1.5">
+            <label className="block text-xs font-semibold text-slate-300">
+              Email Address <span className="text-orange-500">*</span>
+            </label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full py-2.5 px-3.5 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+            />
+          </div>
         )}
 
-        <Input
-          label="6-Digit Verification Code"
-          type="text"
-          required
-          maxLength={6}
-          placeholder="123456"
-          className="text-center tracking-widest text-lg font-mono"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-        />
+        <div className="space-y-1.5">
+          <label className="block text-xs font-semibold text-slate-300">
+            6-Digit Verification Code (৬ সংখ্যার কোড) <span className="text-orange-500">*</span>
+          </label>
+          <input
+            type="text"
+            required
+            maxLength={6}
+            placeholder="123456"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            className="w-full py-3 px-3.5 text-center tracking-[0.3em] text-xl font-mono font-bold bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+          />
+        </div>
 
-        <Button
+        <button
           type="submit"
-          variant="primary"
-          size="lg"
-          isLoading={isLoading}
-          className="w-full mt-2"
+          disabled={isLoading}
+          className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-sm bg-orange-600 hover:bg-orange-500 active:scale-[0.99] disabled:opacity-50 text-white shadow-lg shadow-orange-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
-          Verify & Continue
-        </Button>
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>যাচাই করা হচ্ছে...</span>
+            </>
+          ) : (
+            <>
+              <span>Verify & Continue (যাচাই সম্পন্ন করুন)</span>
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
+        </button>
       </form>
 
-      <div className="pt-2 text-center text-xs text-slate-500">
-        Didn&apos;t receive the code?{' '}
+      <div className="pt-2 text-center text-xs text-slate-400">
+        কোড পাননি?{' '}
         <button
           type="button"
           disabled={isResending}
           onClick={handleResend}
-          className="font-bold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer disabled:opacity-50"
+          className="font-bold text-orange-400 hover:text-orange-300 hover:underline cursor-pointer disabled:opacity-50 transition-colors"
         >
-          {isResending ? 'Resending...' : 'Resend Code'}
+          {isResending ? 'পাঠানো হচ্ছে...' : 'Resend Code (পুনরায় পাঠান)'}
         </button>
       </div>
     </div>
@@ -165,7 +179,7 @@ function VerifyEmailContent() {
 
 export default function VerifyEmailPage() {
   return (
-    <Suspense fallback={<div className="text-center text-xs text-slate-400 py-12">Loading...</div>}>
+    <Suspense fallback={<div className="text-center text-xs text-slate-400 py-12">লোড হচ্ছে...</div>}>
       <VerifyEmailContent />
     </Suspense>
   );

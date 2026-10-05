@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, use } from 'react';
+import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { membershipApi } from '@/lib/api/membership.api';
 import { Membership } from '@/types/api.types';
 import { StatusBadge } from '@/components/ui/Badge';
@@ -12,9 +11,7 @@ import { formatCurrency } from '@/lib/utils/formatCurrency';
 import { Skeleton } from '@/components/ui/EmptyState';
 import {
   ArrowLeft,
-  Calendar,
   Building2,
-  Receipt,
   AlertOctagon,
   CheckCircle2,
 } from 'lucide-react';
@@ -26,7 +23,6 @@ export default function BookingDetailPage({
 }) {
   const unwrappedParams = 'then' in params ? use(params) : params;
   const bookingId = unwrappedParams.id;
-  const router = useRouter();
 
   const [booking, setBooking] = useState<Membership | null>(null);
   const [isLoading, setIsLoading] = useState(true);

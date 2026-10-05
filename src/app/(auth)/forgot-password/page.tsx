@@ -3,10 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
 import { authApi } from '@/lib/api/auth.api';
-import { AlertCircle, ArrowLeft, KeyRound } from 'lucide-react';
+import { AlertCircle, ArrowLeft, ArrowRight, KeyRound, Loader2, Mail } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -39,54 +37,72 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center mx-auto mb-3">
-          <KeyRound className="w-6 h-6" />
+      <div className="text-center space-y-2">
+        <div className="w-14 h-14 rounded-2xl bg-orange-600/15 border border-orange-500/20 text-orange-400 flex items-center justify-center mx-auto shadow-lg shadow-orange-600/10">
+          <KeyRound className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-2xl font-black text-white tracking-tight">
           Forgot Password?
         </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-          Enter your email to receive a password reset verification code
+        <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+          পাসওয়ার্ড রিসেট ভেরিফিকেশন কোড পেতে আপনার নিবন্ধিত ইমেইল ঠিকানা দিন
         </p>
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-600 dark:text-red-400">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-orange-600/10 border border-orange-500/30 text-xs font-medium text-orange-400">
+          <AlertCircle className="w-4 h-4 shrink-0 text-orange-500" />
           <span>{error}</span>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          label="Email Address"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div className="space-y-1.5">
+          <label className="block text-xs font-semibold text-slate-300">
+            Email Address (ইমেইল ঠিকানা) <span className="text-orange-500">*</span>
+          </label>
+          <div className="relative flex items-center">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-slate-500">
+              <Mail className="w-4 h-4" />
+            </div>
+            <input
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full py-2.5 pl-10 pr-3.5 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+            />
+          </div>
+        </div>
 
-        <Button
+        <button
           type="submit"
-          variant="primary"
-          size="lg"
-          isLoading={isLoading}
-          className="w-full mt-2"
+          disabled={isLoading}
+          className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-sm bg-orange-600 hover:bg-orange-500 active:scale-[0.99] disabled:opacity-50 text-white shadow-lg shadow-orange-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
-          Send Reset Code
-        </Button>
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>কোড পাঠানো হচ্ছে...</span>
+            </>
+          ) : (
+            <>
+              <span>Send Reset Code (কোড পাঠান)</span>
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
+        </button>
       </form>
 
       <div className="pt-2 text-center">
         <Link
           href="/login"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-orange-400 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          Back to login
+          Back to login (লগইনে ফিরে যান)
         </Link>
       </div>
     </div>

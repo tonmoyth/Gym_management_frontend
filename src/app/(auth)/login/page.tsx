@@ -4,9 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth/useAuth';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, ArrowRight, Loader2, Lock, Mail } from 'lucide-react';
 
 import { memberApi } from '@/lib/api/member.api';
 import { businessApi } from '@/lib/api/business.api';
@@ -97,72 +95,99 @@ export default function LoginPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-          Welcome back
+        <h2 className="text-2xl font-black text-white tracking-tight">
+          Welcome Back
         </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-          Enter your credentials to access your account
+        <p className="text-xs text-slate-400 mt-1">
+          আপনার অ্যাকাউন্টে প্রবেশ করতে ইমেইল ও পাসওয়ার্ড দিন
         </p>
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-600 dark:text-red-400">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-orange-600/10 border border-orange-500/30 text-xs font-medium text-orange-400">
+          <AlertCircle className="w-4 h-4 shrink-0 text-orange-500" />
           <span>{error}</span>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          label="Email Address"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <div className="space-y-1">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-              Password
-            </span>
-            <Link
-              href="/forgot-password"
-              className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              Forgot?
-            </Link>
+        {/* Email Field */}
+        <div className="space-y-1.5">
+          <label className="block text-xs font-semibold text-slate-300">
+            Email Address (ইমেইল ঠিকানা) <span className="text-orange-500">*</span>
+          </label>
+          <div className="relative flex items-center">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-slate-500">
+              <Mail className="w-4 h-4" />
+            </div>
+            <input
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full py-2.5 pl-10 pr-3.5 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+            />
           </div>
-          <Input
-            type="password"
-            required
-            autoComplete="current-password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
         </div>
 
-        <Button
+        {/* Password Field */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <label className="block text-xs font-semibold text-slate-300">
+              Password (পাসওয়ার্ড) <span className="text-orange-500">*</span>
+            </label>
+            <Link
+              href="/forgot-password"
+              className="text-xs font-semibold text-orange-400 hover:text-orange-300 transition-colors"
+            >
+              পাসওয়ার্ড ভুলে গেছেন?
+            </Link>
+          </div>
+          <div className="relative flex items-center">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-slate-500">
+              <Lock className="w-4 h-4" />
+            </div>
+            <input
+              type="password"
+              required
+              autoComplete="current-password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full py-2.5 pl-10 pr-3.5 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+            />
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <button
           type="submit"
-          variant="primary"
-          size="lg"
-          isLoading={isLoading}
-          className="w-full mt-2"
+          disabled={isLoading}
+          className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-sm bg-orange-600 hover:bg-orange-500 active:scale-[0.99] disabled:opacity-50 text-white shadow-lg shadow-orange-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
-          Sign In
-        </Button>
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>যাচাই করা হচ্ছে...</span>
+            </>
+          ) : (
+            <>
+              <span>Sign In (লগইন)</span>
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
+        </button>
       </form>
 
-      <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-500">
-        Don&apos;t have an account?{' '}
+      <div className="pt-4 border-t border-slate-800 text-center text-xs text-slate-400">
+        নতুন অ্যাকাউন্ট তৈরি করতে চান?{' '}
         <Link
           href="/register"
-          className="font-bold text-blue-600 dark:text-blue-400 hover:underline"
+          className="font-bold text-orange-400 hover:text-orange-300 hover:underline transition-colors"
         >
-          Create account
+          Create account (রেজিস্ট্রেশন)
         </Link>
       </div>
     </div>

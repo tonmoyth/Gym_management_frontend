@@ -16,11 +16,9 @@ import { CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import { 
   ShieldCheck, 
   Plus, 
-  Clock, 
   Check, 
   Archive, 
   Edit3, 
-  Sparkles,
   AlertCircle 
 } from 'lucide-react';
 import { MembershipPlan } from '@/types/api.types';

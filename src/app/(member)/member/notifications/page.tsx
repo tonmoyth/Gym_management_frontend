@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { notificationApi } from '@/lib/api/notification.api';
 import { Notification } from '@/types/api.types';
 import { StatusBadge } from '@/components/ui/Badge';

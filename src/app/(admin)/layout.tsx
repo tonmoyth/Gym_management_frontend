@@ -15,7 +15,6 @@ import {
   UserCheck,
   History,
   Megaphone,
-  Gift,
   Layers,
   Landmark,
 } from 'lucide-react';

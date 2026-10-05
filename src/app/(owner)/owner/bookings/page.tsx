@@ -20,7 +20,6 @@ import {
   Check, 
   Smartphone, 
   ShieldCheck, 
-  Wallet,
   AlertCircle
 } from 'lucide-react';
 

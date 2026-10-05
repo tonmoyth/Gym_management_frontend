@@ -24,7 +24,6 @@ import {
   Plus,
   Trash2,
   ExternalLink,
-  Clock,
   FileText,
   Calendar
 } from 'lucide-react';
@@ -66,7 +65,7 @@ export default function TrainerProfilePage() {
   const availableTags: SpecializationTag[] = tagsRes?.data?.data || [];
 
   // 3. Fetch certifications
-  const { data: certsRes, isLoading: isCertsLoading } = useQuery({
+  const { data: certsRes } = useQuery({
     queryKey: ['trainer-certifications-me'],
     queryFn: () => trainerApi.getOwnCertifications(),
   });

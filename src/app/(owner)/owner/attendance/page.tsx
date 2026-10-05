@@ -10,8 +10,6 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
 import { ConfirmDialog } from '@/components/ui/Modal';
-import { Select } from '@/components/ui/Select';
-import { StatusBadge, Badge } from '@/components/ui/Badge';
 import { CardSkeleton, TableSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import {
   QrCode,
@@ -26,7 +24,6 @@ import {
   Printer,
   Search,
   Calendar,
-  Filter,
   RefreshCw,
   Copy,
   Check,
@@ -34,7 +31,6 @@ import {
   Activity,
   Percent,
   Radio,
-  SlidersHorizontal,
   Fingerprint,
   CreditCard,
   Smartphone,

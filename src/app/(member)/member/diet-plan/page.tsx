@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { dietPlanApi } from '@/lib/api/dietPlan.api';
 import { DietPlan } from '@/types/api.types';
 import { EmptyState, Skeleton } from '@/components/ui/EmptyState';
-import { Utensils, Clock, Flame, CheckCircle2, Target, Dumbbell, Apple, Droplet } from 'lucide-react';
+import { Utensils, Clock, Flame, CheckCircle2, Target, Droplet } from 'lucide-react';
 
 export default function MemberDietPlanPage() {
   const [dietPlan, setDietPlan] = useState<DietPlan | null>(null);

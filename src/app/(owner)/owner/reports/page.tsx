@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { businessApi } from '@/lib/api/business.api';
@@ -25,7 +25,6 @@ import {
   ShieldCheck,
   Clock,
   CheckCircle2,
-  AlertCircle
 } from 'lucide-react';
 
 export default function OwnerReportsPage() {

@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { use, useState } from 'react';
+import { use, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { jobPostApi } from '@/lib/api/jobPost.api';
 import { Button } from '@/components/ui/Button';
@@ -16,8 +16,6 @@ import {
   Award, 
   Mail, 
   Calendar, 
-  ShieldCheck,
-  Star,
   AlertCircle 
 } from 'lucide-react';
 import Link from 'next/link';

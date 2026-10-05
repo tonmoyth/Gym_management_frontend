@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
 import { Button } from '@/components/ui/Button';
@@ -9,11 +9,9 @@ import { Select } from '@/components/ui/Select';
 import { StatusBadge } from '@/components/ui/Badge';
 import { CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import { 
-  AlertTriangle, 
   ArrowRight, 
   Calendar, 
   CheckCircle2, 
-  Clock, 
   User 
 } from 'lucide-react';
 import Link from 'next/link';

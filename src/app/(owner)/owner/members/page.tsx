@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { businessApi } from '@/lib/api/business.api';
 import { membershipApi } from '@/lib/api/membership.api';

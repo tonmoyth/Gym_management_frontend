@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
 import { Input } from '@/components/ui/Input';
@@ -14,10 +14,9 @@ import {
   UserCheck, 
   Ban, 
   Mail, 
-  Calendar,
   AlertCircle 
 } from 'lucide-react';
-import { User, Role } from '@/types/api.types';
+import { User } from '@/types/api.types';
 
 export default function AdminUsersPage() {
   const queryClient = useQueryClient();

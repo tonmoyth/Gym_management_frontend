@@ -36,8 +36,7 @@ export default function OwnerChatPage() {
 }
 */
 
-import React from 'react';
-import { MessageSquare, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 
 export default function OwnerChatPage() {
   return (

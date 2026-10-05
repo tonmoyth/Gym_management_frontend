@@ -1,31 +1,26 @@
 'use client';
 
-import React, { useState, useEffect, use } from 'react';
+import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { membershipApi } from '@/lib/api/membership.api';
 import { paymentApi } from '@/lib/api/payment.api';
 import { paymentAccountApi } from '@/lib/api/paymentAccount.api';
 import { PaymentGateway, Membership, PaymentAccount, PaymentAccountType } from '@/types/api.types';
-import { formatCurrency } from '@/lib/utils/formatCurrency';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { StatusBadge } from '@/components/ui/Badge';
 import {
-  CreditCard,
   CheckCircle2,
   Clock,
   ArrowRight,
   ShieldAlert,
-  Calendar,
   Building2,
   Copy,
   Check,
   Landmark,
   Smartphone,
   AlertCircle,
-  Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
@@ -36,7 +31,6 @@ export default function MemberCheckoutPage({
 }) {
   const unwrappedParams = 'then' in params ? use(params) : params;
   const planId = unwrappedParams.planId;
-  const router = useRouter();
 
   // Selected method can be BKASH, NAGAD, or BANK (STRIPE commented out for later use)
   const [selectedMethod, setSelectedMethod] = useState<'BKASH' | 'NAGAD' | 'BANK' /* | 'STRIPE' */>('BKASH');
@@ -160,15 +154,13 @@ export default function MemberCheckoutPage({
           : 'BKASH';
       */
 
-      const payRes = await paymentApi.initiate({
+      await paymentApi.initiate({
         membershipId,
         gateway,
         amount: Number(plan?.price || 1500),
         senderPhone: senderPhone.trim() || undefined,
         transactionId: transactionId.trim() || undefined,
       });
-
-      const payData = payRes.data?.data as any;
 
       /*
       // 3. For Stripe, redirect to Stripe Checkout (kept for later use)

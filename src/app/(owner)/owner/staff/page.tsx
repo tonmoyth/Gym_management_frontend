@@ -16,7 +16,6 @@ import {
   Plus, 
   Trash2, 
   Edit3, 
-  ShieldCheck, 
   Mail, 
   AlertCircle 
 } from 'lucide-react';

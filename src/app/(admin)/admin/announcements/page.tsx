@@ -16,13 +16,11 @@ import {
   Users,
   Building2,
   Award,
-  UserCheck,
   CheckCircle2,
   AlertCircle,
   Clock,
   Radio,
   Search,
-  Filter
 } from 'lucide-react';
 
 export default function AdminAnnouncementsPage() {

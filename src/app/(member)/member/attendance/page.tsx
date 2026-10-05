@@ -1,12 +1,12 @@
 'use strict';
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { attendanceApi, MyAttendanceData } from '@/lib/api/attendance.api';
+import { attendanceApi } from '@/lib/api/attendance.api';
 import { membershipApi } from '@/lib/api/membership.api';
 import { Button } from '@/components/ui/Button';
-import { StatusBadge, Badge } from '@/components/ui/Badge';
+import { StatusBadge } from '@/components/ui/Badge';
 import { CardSkeleton, TableSkeleton } from '@/components/ui/EmptyState';
 import { Input } from '@/components/ui/Input';
 import {
@@ -21,11 +21,8 @@ import {
   Building2,
   Trophy,
   Dumbbell,
-  Sparkles,
   RefreshCw,
   Camera,
-  Search,
-  Check,
   Smartphone,
   Fingerprint,
 } from 'lucide-react';

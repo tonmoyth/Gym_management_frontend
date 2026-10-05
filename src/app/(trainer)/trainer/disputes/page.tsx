@@ -15,11 +15,8 @@ import { TableSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import { 
   AlertTriangle, 
   Plus, 
-  Clock, 
-  MessageSquare, 
   AlertCircle,
   Check,
-  Building2 
 } from 'lucide-react';
 import { Dispute, DisputeCategory } from '@/types/api.types';
 

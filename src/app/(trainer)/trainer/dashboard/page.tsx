@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { trainerApi, TrainerDashboardData } from '@/lib/api/trainer.api';
 import { payoutApi } from '@/lib/api/payout.api';
@@ -9,7 +9,7 @@ import { notificationApi } from '@/lib/api/notification.api';
 import { formatCurrency } from '@/lib/utils/formatCurrency';
 import { Button } from '@/components/ui/Button';
 import { CardSkeleton } from '@/components/ui/EmptyState';
-import { StatusBadge, Badge } from '@/components/ui/Badge';
+import { StatusBadge } from '@/components/ui/Badge';
 import {
   Award,
   CheckCircle2,
@@ -28,11 +28,9 @@ import {
   CheckCheck,
   Check,
   Activity,
-  Flame,
   UserCheck,
   UserX,
   ChevronRight,
-  Info,
 } from 'lucide-react';
 import Link from 'next/link';
 import { TrainerPayout, Notification } from '@/types/api.types';

@@ -1,11 +1,10 @@
 'use strict';
 'use client';
 
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
 import { TableSkeleton, EmptyState } from '@/components/ui/EmptyState';
-import { History, Shield, Clock, User, Globe } from 'lucide-react';
+import { History, User, Globe } from 'lucide-react';
 import { AuditLog } from '@/types/api.types';
 
 export default function AdminAuditLogsPage() {

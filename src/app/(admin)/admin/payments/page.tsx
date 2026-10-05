@@ -1,30 +1,16 @@
 'use strict';
 'use client';
 
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
 import { formatCurrency } from '@/lib/utils/formatCurrency';
 import { StatusBadge } from '@/components/ui/Badge';
-import { TableSkeleton, CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
-import { 
-  CreditCard, 
-  CheckCircle2, 
-  Activity, 
-  Clock, 
-  TrendingUp, 
-  DollarSign 
-} from 'lucide-react';
+import { TableSkeleton, EmptyState } from '@/components/ui/EmptyState';
+import { CreditCard } from 'lucide-react';
 import { Payment } from '@/types/api.types';
 
 export default function AdminPaymentsPage() {
-  // 1. Fetch Gateway Health Status
-  const { data: gatewayRes, isLoading: isGatewaysLoading } = useQuery({
-    queryKey: ['admin-gateway-status'],
-    queryFn: () => adminApi.getGatewayStatus(),
-  });
-
-  // 2. Fetch platform transactions
+  // 1. Fetch platform transactions
   const { data: txRes, isLoading: isTxLoading } = useQuery({
     queryKey: ['admin-transactions'],
     queryFn: () => adminApi.getTransactions(),

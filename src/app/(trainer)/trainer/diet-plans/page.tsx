@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Modal } from '@/components/ui/Modal';
 import { EmptyState, CardSkeleton } from '@/components/ui/EmptyState';
-import { Select } from '@/components/ui/Select';
 import { Badge } from '@/components/ui/Badge';
 import { 
   Apple, 
@@ -17,13 +16,8 @@ import {
   Flame, 
   Check, 
   AlertCircle, 
-  User,
   Building2,
-  Utensils,
-  Target,
-  Calendar,
   Sparkles,
-  Search,
 } from 'lucide-react';
 
 export default function TrainerDietPlansPage() {

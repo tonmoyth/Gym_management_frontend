@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Button } from './Button';
 import { Input } from './Input';
-import { Camera, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Camera, AlertCircle } from 'lucide-react';
 
 export interface QrScannerProps {
   onScan: (businessId: string) => void;
@@ -13,7 +13,6 @@ export interface QrScannerProps {
 export function QrScanner({ onScan, isLoading = false }: QrScannerProps) {
   const [manualId, setManualId] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const handleManualSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,12 +59,6 @@ export function QrScanner({ onScan, isLoading = false }: QrScannerProps) {
         </div>
       )}
 
-      {success && (
-        <div className="mb-4 flex items-center gap-2 text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 p-3 rounded-xl border border-emerald-200 dark:border-emerald-800">
-          <CheckCircle2 className="w-4 h-4 shrink-0" />
-          <span>Check-in successful! Streak updated.</span>
-        </div>
-      )}
 
       {/* Manual Fallback / Direct check-in */}
       <form onSubmit={handleManualSubmit} className="w-full space-y-3 pt-2">

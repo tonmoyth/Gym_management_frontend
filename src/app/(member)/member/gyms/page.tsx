@@ -13,12 +13,10 @@ import { useAuth } from '@/lib/auth/useAuth';
 import {
   Search,
   MapPin,
-  Star,
   Dumbbell,
   ArrowRight,
   ShieldCheck,
   Compass,
-  Sparkles,
   Phone,
   Filter
 } from 'lucide-react';

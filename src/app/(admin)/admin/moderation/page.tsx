@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
 import { Button } from '@/components/ui/Button';
@@ -9,20 +9,18 @@ import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import { 
-  FileWarning, 
   Trash2, 
   Star, 
   Briefcase, 
   Building2, 
   CheckCircle2, 
-  User,
   AlertCircle,
   Ban,
   Search,
   Users,
   Calendar
 } from 'lucide-react';
-import { Review, JobPost } from '@/types/api.types';
+import { Review } from '@/types/api.types';
 
 export default function AdminModerationPage() {
   const queryClient = useQueryClient();

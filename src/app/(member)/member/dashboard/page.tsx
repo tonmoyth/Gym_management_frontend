@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { memberApi, MemberDashboardData } from '@/lib/api/member.api';
 import { dietPlanApi } from '@/lib/api/dietPlan.api';
@@ -11,9 +11,7 @@ import { StatusBadge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { CardSkeleton } from '@/components/ui/EmptyState';
-import { formatCurrency } from '@/lib/utils/formatCurrency';
 import {
-  Calendar,
   QrCode,
   TrendingUp,
   Utensils,
@@ -28,7 +26,6 @@ import {
   Building2,
   Sparkles,
   Flame,
-  Target,
 } from 'lucide-react';
 
 export default function MemberDashboardPage() {

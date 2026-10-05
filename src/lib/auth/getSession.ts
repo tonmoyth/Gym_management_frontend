@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { Role, StaffPermissionRole, User } from '@/types/api.types';
+import { Role, StaffPermissionRole } from '@/types/api.types';
 
 const BACKEND_URL = process.env.BACKEND_API_URL || 'http://localhost:5000/api/v1';
 

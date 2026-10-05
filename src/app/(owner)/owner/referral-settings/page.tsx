@@ -1,7 +1,6 @@
 'use strict';
 'use client';
 
-import React from 'react';
 import { Gift, Info } from 'lucide-react';
 
 export default function OwnerReferralSettingsPage() {

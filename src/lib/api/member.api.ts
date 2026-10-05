@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import { ApiResponse, MemberProfile, SpecializationTag, Business, MembershipPlan, TrainerProfile } from '@/types/api.types';
+import { ApiResponse, MemberProfile, Business, MembershipPlan, TrainerProfile } from '@/types/api.types';
 
 export interface MemberDashboardData {
   member: {

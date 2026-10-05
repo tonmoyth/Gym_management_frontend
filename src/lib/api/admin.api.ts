@@ -8,7 +8,6 @@ import {
   Review,
   JobPost,
   AuditLog,
-  BusinessReferral,
   PlatformSubscription,
   Payment,
 } from '@/types/api.types';

@@ -5,20 +5,16 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Modal } from '@/components/ui/Modal';
 import { StatusBadge } from '@/components/ui/Badge';
 import { CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import { 
-  ShieldCheck, 
   CheckCircle2, 
   XCircle, 
   ExternalLink, 
-  Award, 
   Calendar,
   AlertCircle,
-  Clock 
 } from 'lucide-react';
 import { TrainerCertification } from '@/types/api.types';
 

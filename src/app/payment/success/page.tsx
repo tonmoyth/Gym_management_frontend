@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { paymentApi, VerifiedSessionData } from '@/lib/api/payment.api';
 import { formatCurrency } from '@/lib/utils/formatCurrency';
 import { Button } from '@/components/ui/Button';
@@ -15,24 +15,20 @@ import {
   Building2,
   Calendar,
   CreditCard,
-  Clock,
   Sparkles,
   ShieldCheck,
   Printer,
   ChevronRight,
-  AlertCircle,
   Loader2,
 } from 'lucide-react';
 
 function PaymentSuccessContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const sessionId = searchParams.get('session_id') || searchParams.get('sessionId') || '';
 
   const [isLoading, setIsLoading] = useState(true);
   const [sessionData, setSessionData] = useState<VerifiedSessionData | null>(null);
   const [isCopied, setIsCopied] = useState(false);
-  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!sessionId) {
@@ -50,10 +46,6 @@ function PaymentSuccessContent() {
       } catch (err: any) {
         if (isMounted) {
           console.warn('Could not retrieve full session details from backend:', err);
-          setLoadError(
-            err.response?.data?.message ||
-              'Payment recorded by Stripe. Status is syncing with your account.'
-          );
         }
       } finally {
         if (isMounted) {

@@ -15,7 +15,6 @@ import {
   DollarSign,
   Star,
   AlertTriangle,
-  MessageSquare,
   Landmark,
 } from 'lucide-react';
 

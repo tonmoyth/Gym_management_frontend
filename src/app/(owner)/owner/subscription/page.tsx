@@ -19,18 +19,14 @@ import { CardSkeleton, TableSkeleton } from '@/components/ui/EmptyState';
 import {
   CreditCard,
   Check,
-  Zap,
   Clock,
   Calendar,
-  Building2,
-  AlertTriangle,
   CheckCircle2,
   Copy,
   Landmark,
   Smartphone,
   Sparkles,
   ArrowRight,
-  ShieldCheck,
   RefreshCw,
   AlertCircle,
 } from 'lucide-react';

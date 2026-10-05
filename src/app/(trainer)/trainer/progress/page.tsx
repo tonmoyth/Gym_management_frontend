@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Modal } from '@/components/ui/Modal';
 import { EmptyState, CardSkeleton } from '@/components/ui/EmptyState';
-import { Badge } from '@/components/ui/Badge';
 import {
   TrendingUp,
   Plus,
@@ -18,11 +17,9 @@ import {
   Activity,
   Check,
   AlertCircle,
-  User,
   Ruler,
   Sparkles,
   Building2,
-  Calendar,
 } from 'lucide-react';
 
 // WHO BMI classification helper

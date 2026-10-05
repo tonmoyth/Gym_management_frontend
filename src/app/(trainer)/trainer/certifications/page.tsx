@@ -12,10 +12,8 @@ import { CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import { 
   ShieldCheck, 
   Plus, 
-  Upload, 
   Calendar, 
   ExternalLink, 
-  CheckCircle2, 
   Clock, 
   AlertCircle,
   Trash2 
@@ -145,7 +143,6 @@ export default function TrainerCertificationsPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {certifications.map((cert: TrainerCertification) => {
-            const isVerified = cert.status === 'VERIFIED';
             const isPending = cert.status === 'PENDING';
 
             return (

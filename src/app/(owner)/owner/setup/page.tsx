@@ -1,17 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, type FormEvent } from 'react';
 import { businessApi } from '@/lib/api/business.api';
-import { useAuth } from '@/lib/auth/useAuth';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
-import { Building2, CheckCircle2, AlertCircle, Sparkles, RefreshCw } from 'lucide-react';
+import { Building2, AlertCircle } from 'lucide-react';
 
 export default function OwnerSetupPage() {
-  const router = useRouter();
-  const { refreshUser } = useAuth();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
@@ -54,7 +50,7 @@ export default function OwnerSetupPage() {
     checkExistingBusiness();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);

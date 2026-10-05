@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import { ApiResponse, ProgressLog } from '@/types/api.types';
+import { ApiResponse } from '@/types/api.types';
 
 export interface CreateProgressInput {
   memberId?: string; // If logged by trainer

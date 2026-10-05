@@ -6,10 +6,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { adminApi } from '@/lib/api/admin.api';
 import { formatCurrency } from '@/lib/utils/formatCurrency';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Modal, ConfirmDialog } from '@/components/ui/Modal';
-import { StatusBadge, Badge } from '@/components/ui/Badge';
+import { StatusBadge } from '@/components/ui/Badge';
 import { CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
 import { 
   Building2, 
@@ -26,8 +25,7 @@ import {
   Copy,
   Check,
   Eye,
-  User,
-  ExternalLink
+  User
 } from 'lucide-react';
 import { Business } from '@/types/api.types';
 

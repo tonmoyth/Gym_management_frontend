@@ -1,12 +1,11 @@
 'use strict';
 'use client';
 
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { trainerApi } from '@/lib/api/trainer.api';
 import { reviewApi } from '@/lib/api/review.api';
 import { CardSkeleton, EmptyState } from '@/components/ui/EmptyState';
-import { Star, User, Calendar, Award } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { Review } from '@/types/api.types';
 
 export default function TrainerReviewsPage() {

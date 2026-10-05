@@ -1,10 +1,10 @@
 'use strict';
 'use client';
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Button } from './Button';
-import { Download, Printer } from 'lucide-react';
+import { Printer } from 'lucide-react';
 
 export interface QrDisplayProps {
   businessId?: string;

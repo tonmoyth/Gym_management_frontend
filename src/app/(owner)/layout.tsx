@@ -16,10 +16,8 @@ import {
   Megaphone,
   DollarSign,
   BarChart3,
-  Gift,
   UserCheck,
   CreditCard,
-  MessageSquare,
   Landmark,
 } from 'lucide-react';
 

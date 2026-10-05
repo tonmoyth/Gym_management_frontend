@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/useAuth';
 import { NotificationBell } from '@/components/ui/NotificationBell';

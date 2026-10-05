@@ -1,7 +1,7 @@
 'use strict';
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { businessApi } from '@/lib/api/business.api';
 import { trainerApi } from '@/lib/api/trainer.api';
@@ -14,12 +14,10 @@ import {
   Award, 
   Star, 
   CheckCircle2, 
-  Trash2, 
   Briefcase, 
   UserX,
   Mail,
   Plus,
-  DollarSign,
   AlertCircle
 } from 'lucide-react';
 import { TrainerProfile } from '@/types/api.types';

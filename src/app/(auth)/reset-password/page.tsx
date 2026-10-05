@@ -3,10 +3,8 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
 import { authApi } from '@/lib/api/auth.api';
-import { AlertCircle, CheckCircle2, Lock } from 'lucide-react';
+import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Loader2, Lock, Mail } from 'lucide-react';
 
 function ResetPasswordContent() {
   const router = useRouter();
@@ -30,7 +28,7 @@ function ResetPasswordContent() {
     setError(null);
 
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('Passwords do not match (পাসওয়ার্ড দুটি মিলছে না)');
       return;
     }
 
@@ -62,90 +60,133 @@ function ResetPasswordContent() {
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center mx-auto mb-3">
-          <Lock className="w-6 h-6" />
+      <div className="text-center space-y-2">
+        <div className="w-14 h-14 rounded-2xl bg-orange-600/15 border border-orange-500/20 text-orange-400 flex items-center justify-center mx-auto shadow-lg shadow-orange-600/10">
+          <Lock className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-2xl font-black text-white tracking-tight">
           Reset Password
         </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-          Enter the code sent to your email and your new password
+        <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+          আপনার ইমেইলে প্রাপ্ত কোড এবং নতুন পাসওয়ার্ড প্রদান করুন
         </p>
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-600 dark:text-red-400">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-orange-600/10 border border-orange-500/30 text-xs font-medium text-orange-400">
+          <AlertCircle className="w-4 h-4 shrink-0 text-orange-500" />
           <span>{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-600 dark:text-emerald-400">
-          <CheckCircle2 className="w-4 h-4 shrink-0" />
-          <span>Password reset successful! Redirecting to login...</span>
+        <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-orange-600/10 border border-orange-500/30 text-xs font-medium text-orange-400">
+          <CheckCircle2 className="w-4 h-4 shrink-0 text-orange-500" />
+          <span>পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে! লগইন পেজে নিয়ে যাওয়া হচ্ছে...</span>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {!searchParams.get('email') && (
-          <Input
-            label="Email Address"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <div className="space-y-1.5">
+            <label className="block text-xs font-semibold text-slate-300">
+              Email Address <span className="text-orange-500">*</span>
+            </label>
+            <div className="relative flex items-center">
+              <div className="absolute left-3.5 flex items-center pointer-events-none text-slate-500">
+                <Mail className="w-4 h-4" />
+              </div>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full py-2.5 pl-10 pr-3.5 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+              />
+            </div>
+          </div>
         )}
 
-        <Input
-          label="Verification Code (OTP)"
-          type="text"
-          required
-          placeholder="123456"
-          className="tracking-widest font-mono text-center text-base"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-        />
+        <div className="space-y-1.5">
+          <label className="block text-xs font-semibold text-slate-300">
+            Verification Code (OTP) <span className="text-orange-500">*</span>
+          </label>
+          <input
+            type="text"
+            required
+            placeholder="123456"
+            className="w-full py-2.5 px-3.5 text-center tracking-[0.25em] font-mono font-bold text-base bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+          />
+        </div>
 
-        <Input
-          label="New Password"
-          type="password"
-          required
-          minLength={6}
-          placeholder="••••••••"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
+        <div className="space-y-1.5">
+          <label className="block text-xs font-semibold text-slate-300">
+            New Password (নতুন পাসওয়ার্ড) <span className="text-orange-500">*</span>
+          </label>
+          <div className="relative flex items-center">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-slate-500">
+              <Lock className="w-4 h-4" />
+            </div>
+            <input
+              type="password"
+              required
+              minLength={6}
+              placeholder="••••••••"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full py-2.5 pl-10 pr-3.5 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+            />
+          </div>
+        </div>
 
-        <Input
-          label="Confirm New Password"
-          type="password"
-          required
-          minLength={6}
-          placeholder="••••••••"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+        <div className="space-y-1.5">
+          <label className="block text-xs font-semibold text-slate-300">
+            Confirm New Password (পাসওয়ার্ড নিশ্চিত করুন) <span className="text-orange-500">*</span>
+          </label>
+          <div className="relative flex items-center">
+            <div className="absolute left-3.5 flex items-center pointer-events-none text-slate-500">
+              <Lock className="w-4 h-4" />
+            </div>
+            <input
+              type="password"
+              required
+              minLength={6}
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full py-2.5 pl-10 pr-3.5 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-150"
+            />
+          </div>
+        </div>
 
-        <Button
+        <button
           type="submit"
-          variant="primary"
-          size="lg"
-          isLoading={isLoading}
-          className="w-full mt-2"
+          disabled={isLoading}
+          className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-sm bg-orange-600 hover:bg-orange-500 active:scale-[0.99] disabled:opacity-50 text-white shadow-lg shadow-orange-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
-          Reset Password
-        </Button>
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>পাসওয়ার্ড পরিবর্তন হচ্ছে...</span>
+            </>
+          ) : (
+            <>
+              <span>Reset Password (পরিবর্তন সম্পন্ন করুন)</span>
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
+        </button>
       </form>
 
       <div className="pt-2 text-center">
         <Link
           href="/login"
-          className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-orange-400 transition-colors"
         >
-          Back to login
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Back to login (লগইনে ফিরে যান)
         </Link>
       </div>
     </div>
@@ -154,7 +195,7 @@ function ResetPasswordContent() {
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense fallback={<div className="text-center text-xs text-slate-400 py-12">Loading...</div>}>
+    <Suspense fallback={<div className="text-center text-xs text-slate-400 py-12">লোড হচ্ছে...</div>}>
       <ResetPasswordContent />
     </Suspense>
   );

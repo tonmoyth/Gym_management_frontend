@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import { ShieldAlert, ArrowLeft, Home } from 'lucide-react';
 import { Button } from '@/components/ui/Button';

@@ -1,7 +1,6 @@
 'use strict';
 'use client';
 
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { trainerApi } from '@/lib/api/trainer.api';
 import { ChatWindow } from '@/components/ui/ChatWindow';
