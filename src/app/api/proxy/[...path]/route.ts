@@ -87,13 +87,66 @@ async function forward(req: NextRequest, pathSegments: string[]) {
     },
   });
 
-  if (accessToken) {
-    res.cookies.set('accessToken', accessToken, {
+  const isProd = process.env.NODE_ENV === 'production';
+
+  // If logout endpoint called, clear all auth cookies
+  if (targetPath === 'auth/logout') {
+    res.cookies.delete('accessToken');
+    res.cookies.delete('access_token');
+    res.cookies.delete('refreshToken');
+    res.cookies.delete('refresh_token');
+    return res;
+  }
+
+  // Check if response contains fresh auth tokens
+  let responseAccessToken: string | undefined;
+  let responseRefreshToken: string | undefined;
+
+  try {
+    const json = JSON.parse(responseText);
+    if (json.token || json.accessToken || json.data?.token || json.data?.accessToken) {
+      responseAccessToken = json.token || json.accessToken || json.data?.token || json.data?.accessToken;
+    }
+    if (json.refreshToken || json.data?.refreshToken) {
+      responseRefreshToken = json.refreshToken || json.data?.refreshToken;
+    }
+  } catch {
+    // Non-JSON response
+  }
+
+  const effectiveAccessToken = responseAccessToken || accessToken;
+
+  if (effectiveAccessToken) {
+    res.cookies.set('accessToken', effectiveAccessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isProd,
       sameSite: 'lax',
       path: '/',
       maxAge: 60 * 60 * 24 * 2, // 2 days
+    });
+    res.cookies.set('access_token', effectiveAccessToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 2,
+    });
+  }
+
+  if (responseRefreshToken) {
+    res.cookies.set('refreshToken', responseRefreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+    res.cookies.set('refresh_token', responseRefreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
     });
   }
 

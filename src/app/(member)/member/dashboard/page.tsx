@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { memberApi, MemberDashboardData } from '@/lib/api/member.api';
+import { dietPlanApi } from '@/lib/api/dietPlan.api';
 import { classScheduleApi } from '@/lib/api/classSchedule.api';
 import { membershipApi } from '@/lib/api/membership.api';
-import { ClassSchedule } from '@/types/api.types';
+import { ClassSchedule, DietPlan } from '@/types/api.types';
 import { StatusBadge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
@@ -26,10 +27,13 @@ import {
   Loader2,
   Building2,
   Sparkles,
+  Flame,
+  Target,
 } from 'lucide-react';
 
 export default function MemberDashboardPage() {
   const [dashboard, setDashboard] = useState<MemberDashboardData | null>(null);
+  const [dietPlan, setDietPlan] = useState<DietPlan | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Class Booking Modal State
@@ -43,9 +47,16 @@ export default function MemberDashboardPage() {
 
   const loadDashboard = async () => {
     try {
-      const res = await memberApi.getDashboard();
-      if (res.data?.success && res.data.data) {
-        setDashboard(res.data.data);
+      const [dashRes, dietRes] = await Promise.allSettled([
+        memberApi.getDashboard(),
+        dietPlanApi.getMyDietPlan(),
+      ]);
+
+      if (dashRes.status === 'fulfilled' && dashRes.value.data?.success) {
+        setDashboard(dashRes.value.data.data);
+      }
+      if (dietRes.status === 'fulfilled' && dietRes.value.data?.success && dietRes.value.data.data) {
+        setDietPlan(dietRes.value.data.data);
       }
     } catch {
       // Fallback
@@ -154,6 +165,39 @@ export default function MemberDashboardPage() {
   const attendance = dashboard?.attendance;
   const classes = dashboard?.upcomingClasses || [];
 
+  const rawDietMeals = dietPlan?.meals || dietPlan?.content?.meals;
+  let dietMeals: any[] = [];
+  if (Array.isArray(rawDietMeals)) {
+    dietMeals = rawDietMeals;
+  } else if (rawDietMeals && typeof rawDietMeals === 'object') {
+    dietMeals = Object.entries(rawDietMeals).map(([mealType, food]: [string, any]) => ({
+      mealType: mealType.charAt(0).toUpperCase() + mealType.slice(1),
+      time:
+        mealType.toLowerCase() === 'breakfast'
+          ? '08:00 AM'
+          : mealType.toLowerCase() === 'lunch'
+          ? '01:00 PM'
+          : mealType.toLowerCase() === 'dinner'
+          ? '08:00 PM'
+          : '04:30 PM',
+      foods:
+        typeof food === 'string'
+          ? [{ name: food }]
+          : Array.isArray(food)
+          ? food
+          : [{ name: String(food) }],
+    }));
+  }
+
+  const dietTitle = dietPlan?.title || dietPlan?.content?.title || 'Coach Prescribed Diet';
+  const dietCoach = dietPlan?.trainer?.name || dietPlan?.trainer?.user?.fullName;
+  const dietCalories =
+    dietPlan?.dailyCalories ||
+    dietPlan?.content?.dailyCalories ||
+    dietPlan?.content?.targetCalories;
+  const dietMacros = dietPlan?.macros || dietPlan?.content?.macros;
+  const dietGoal = dietPlan?.goal || dietPlan?.content?.goal;
+
   return (
     <div className="space-y-8">
       {/* Header Banner */}
@@ -181,7 +225,7 @@ export default function MemberDashboardPage() {
               Check In
             </Button>
           </Link>
-          <Link href="/">
+          <Link href="/member/gyms">
             <Button
               variant="outline"
               size="md"
@@ -252,7 +296,7 @@ export default function MemberDashboardPage() {
               </div>
             </div>
           ) : (
-            <Link href="/">
+            <Link href="/member/gyms">
               <Button variant="primary" size="sm" className="w-full rounded-xl">
                 Browse Gym Plans
               </Button>
@@ -303,21 +347,57 @@ export default function MemberDashboardPage() {
           </div>
         </div>
 
-        {/* Fitness Tracking Shortcuts */}
+        {/* Fitness Tracking Shortcuts / Active Diet Overview */}
         <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between space-y-4">
-          <div className="space-y-1">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-              Health & Nutrition
-            </span>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              Routine & Nutrition
-            </h3>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Track your daily weight, review meal plans from your personal coach, or schedule workout sessions.
-            </p>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                Health & Nutrition
+              </span>
+              {dietPlan && (
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full">
+                  Plan Active
+                </span>
+              )}
+            </div>
+
+            {dietPlan ? (
+              <div className="space-y-1">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white line-clamp-1">
+                  {dietTitle}
+                </h3>
+                <p className="text-xs text-slate-500">
+                  {dietCoach ? `Assigned by Coach ${dietCoach}` : 'Coach Prescribed Plan'}
+                </p>
+                {dietCalories && (
+                  <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 pt-1">
+                    <Flame className="w-3.5 h-3.5 text-amber-500" />
+                    ~{dietCalories} kcal daily target
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  Routine & Nutrition
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Track your daily weight, review meal plans from your personal coach, or schedule workout sessions.
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
+            <Link href="/member/diet-plan">
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/40 hover:bg-emerald-100/70 dark:hover:bg-emerald-950/60 transition-colors text-xs font-bold text-emerald-700 dark:text-emerald-300 cursor-pointer">
+                <span className="flex items-center gap-2">
+                  <Utensils className="w-4 h-4 text-emerald-600" />
+                  {dietPlan ? 'View Active Meal Plan' : 'View Meal Schedule'}
+                </span>
+                <span>→</span>
+              </div>
+            </Link>
             <Link href="/member/progress">
               <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-orange-50/50 transition-colors text-xs font-bold text-slate-700 dark:text-slate-200 cursor-pointer">
                 <span className="flex items-center gap-2">
@@ -326,17 +406,126 @@ export default function MemberDashboardPage() {
                 <span>→</span>
               </div>
             </Link>
-            <Link href="/member/diet-plan">
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-orange-50/50 transition-colors text-xs font-bold text-slate-700 dark:text-slate-200 cursor-pointer">
-                <span className="flex items-center gap-2">
-                  <Utensils className="w-4 h-4 text-emerald-500" /> View Meal Schedule
-                </span>
-                <span>→</span>
-              </div>
-            </Link>
           </div>
         </div>
       </div>
+
+      {/* Active Nutrition Plan Showcase Banner on Dashboard */}
+      {dietPlan && (
+        <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-950/30 via-slate-900 to-slate-900 border border-emerald-500/30 shadow-md space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                  <Utensils className="w-3 h-3 text-emerald-400" />
+                  Active Nutritional Regimen
+                </span>
+                {dietGoal && (
+                  <span className="text-[10px] font-semibold text-slate-400">
+                    • Goal: {dietGoal}
+                  </span>
+                )}
+              </div>
+              <h2 className="text-xl font-black text-white">{dietTitle}</h2>
+              <p className="text-xs text-slate-400">
+                {dietCoach ? `Prescribed by Coach ${dietCoach}` : 'Prescribed by Personal Coach'}
+                {dietPlan.updatedAt &&
+                  ` • Last updated: ${new Date(dietPlan.updatedAt).toLocaleDateString()}`}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0">
+              {dietCalories && (
+                <div className="px-3.5 py-2 rounded-2xl bg-white/5 border border-white/10 text-center">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block">
+                    Daily Target
+                  </span>
+                  <span className="text-base font-black text-amber-300 flex items-center justify-center gap-1">
+                    <Flame className="w-4 h-4 text-amber-400" />
+                    {dietCalories}
+                    <span className="text-[10px] font-normal text-slate-400">kcal</span>
+                  </span>
+                </div>
+              )}
+              <Link href="/member/diet-plan">
+                <Button
+                  variant="primary"
+                  size="sm"
+                  className="rounded-xl gap-1.5 shadow-sm bg-emerald-600 hover:bg-emerald-500 text-white"
+                >
+                  <Utensils className="w-3.5 h-3.5" /> Full Plan →
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Macros Pills */}
+          {dietMacros && (dietMacros.protein || dietMacros.carbs || dietMacros.fats) && (
+            <div className="flex flex-wrap items-center gap-2 text-xs pt-1">
+              {dietMacros.protein && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-white/5 border border-white/10 text-slate-200 font-semibold">
+                  🥩 Protein: <span className="text-emerald-400">{dietMacros.protein}</span>
+                </span>
+              )}
+              {dietMacros.carbs && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-white/5 border border-white/10 text-slate-200 font-semibold">
+                  🍚 Carbs: <span className="text-amber-400">{dietMacros.carbs}</span>
+                </span>
+              )}
+              {dietMacros.fats && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-white/5 border border-white/10 text-slate-200 font-semibold">
+                  🥑 Fats: <span className="text-teal-400">{dietMacros.fats}</span>
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* Quick Meals Grid */}
+          {dietMeals.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+              {dietMeals.slice(0, 4).map((meal: any, idx: number) => {
+                const mealName = meal.mealType || meal.name || `Meal ${idx + 1}`;
+                const mealTime = meal.time;
+                const topFoods = Array.isArray(meal.foods)
+                  ? meal.foods
+                      .map((f: any) => (typeof f === 'string' ? f : f.name))
+                      .filter(Boolean)
+                  : Array.isArray(meal.items)
+                  ? meal.items
+                      .map((i: any) => (typeof i === 'string' ? i : i.name))
+                      .filter(Boolean)
+                  : [];
+
+                return (
+                  <div
+                    key={idx}
+                    className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/40 transition-colors space-y-1.5"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                        {mealName}
+                      </span>
+                      {mealTime && (
+                        <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {mealTime}
+                        </span>
+                      )}
+                    </div>
+                    {topFoods.length > 0 ? (
+                      <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                        {topFoods.join(', ')}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-slate-500 italic">Prescribed meal target</p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Upcoming Classes Timetable */}
       <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">

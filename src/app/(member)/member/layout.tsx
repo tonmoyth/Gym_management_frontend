@@ -62,7 +62,7 @@ export default async function MemberPortalLayout({
 
   const memberNavItems = [
     { label: 'Dashboard', href: '/member/dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
-    { label: 'Find Gyms', href: '/', icon: <Compass className="w-4 h-4" /> },
+    { label: 'Find Gyms', href: '/member/gyms', icon: <Compass className="w-4 h-4" /> },
     { label: 'My Bookings', href: '/member/bookings', icon: <CalendarCheck className="w-4 h-4" /> },
     { label: 'Attendance (QR)', href: '/member/attendance', icon: <QrCode className="w-4 h-4" /> },
     { label: 'Fitness Progress', href: '/member/progress', icon: <TrendingUp className="w-4 h-4" /> },

@@ -293,7 +293,7 @@ export default function MemberCheckoutPage({
           The requested membership plan may have expired or is no longer available.
         </p>
         <div className="pt-2">
-          <Link href="/">
+          <Link href="/member/gyms">
             <Button variant="primary" size="sm">
               Discover Gyms & Plans
             </Button>

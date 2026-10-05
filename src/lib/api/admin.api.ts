@@ -46,13 +46,13 @@ export const adminApi = {
     apiClient.get<ApiResponse<Business[]>>('/admin/businesses', { params }),
 
   approveBusiness: (id: string) =>
-    apiClient.patch<ApiResponse<Business>>(`/admin/businesses/${id}/approve`),
+    apiClient.patch<ApiResponse<Business>>(`/admin/businesses/${id}/approve`, {}),
 
   rejectBusiness: (id: string, reason?: string) =>
     apiClient.patch<ApiResponse<Business>>(`/admin/businesses/${id}/reject`, { reason }),
 
-  suspendBusiness: (id: string) =>
-    apiClient.patch<ApiResponse<Business>>(`/admin/businesses/${id}/suspend`),
+  suspendBusiness: (id: string, reason?: string) =>
+    apiClient.patch<ApiResponse<Business>>(`/admin/businesses/${id}/suspend`, { reason }),
 
   // Certifications Verification
   getPendingCertifications: () =>

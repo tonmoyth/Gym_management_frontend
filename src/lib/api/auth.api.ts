@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { apiClient } from './client';
 import { ApiResponse, Role, User } from '@/types/api.types';
 
@@ -36,7 +37,7 @@ export const authApi = {
     apiClient.post<ApiResponse<null>>('/auth/logout'),
 
   verifyEmail: (data: VerifyEmailInput) =>
-    apiClient.post<ApiResponse<User>>('/auth/verify-email', data),
+    axios.post<ApiResponse<User>>('/api/auth/verify-email', data),
 
   resendVerificationOtp: (email: string) =>
     apiClient.post<ApiResponse<null>>('/auth/resend-verification-otp', { email }),

@@ -35,25 +35,27 @@ function VerifyEmailContent() {
       const res = await authApi.verifyEmail({ email, otp: otp.trim() });
       if (res.data?.success) {
         await refreshUser();
-        const role = res.data.data?.role;
+        const userData = res.data.data;
+        const role = (userData as any)?.role || (userData as any)?.user?.role;
+
         if (role === 'BUSINESS_OWNER') {
           try {
             const myBizRes = await businessApi.getMyBusiness();
             if (myBizRes.data?.success && myBizRes.data.data) {
-              router.push('/owner/dashboard');
+              window.location.href = '/owner/dashboard';
               return;
             }
           } catch {
             // No business created yet
           }
-          router.push('/owner/setup');
+          window.location.href = '/owner/setup';
+        } else if (role === 'TRAINER') {
+          window.location.href = '/trainer/profile';
+        } else if (role === 'SUPER_ADMIN' || role === 'ADMIN' || role === 'STAFF') {
+          window.location.href = '/admin/dashboard';
+        } else {
+          window.location.href = '/onboarding';
         }
-        else if (role === 'TRAINER') router.push('/trainer/profile');
-        else if (role === 'SUPER_ADMIN' || role === 'ADMIN') router.push('/admin/dashboard');
-        else if (role === 'STAFF') {
-          router.push('/admin/dashboard');
-        }
-        else router.push('/onboarding');
       } else {
         setError(res.data?.message || 'Verification failed');
       }

@@ -272,7 +272,7 @@ export default function MemberBookingsPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href="/">
+          <Link href="/member/gyms">
             <Button variant="primary" size="sm" className="rounded-xl gap-1.5 shadow-sm">
               <Sparkles className="w-4 h-4" /> Book New Membership
             </Button>
@@ -494,7 +494,7 @@ export default function MemberBookingsPage() {
                   </p>
                 </div>
                 {activeGyms.length === 0 && (
-                  <Link href="/">
+                  <Link href="/member/gyms">
                     <Button variant="primary" size="sm" className="rounded-xl">
                       Browse Gyms & Memberships
                     </Button>

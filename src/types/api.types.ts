@@ -178,6 +178,8 @@ export interface Business {
   plans?: MembershipPlan[];
   trainers?: any[];
   distance?: number;
+  subscriptionPayments?: SubscriptionPayment[];
+  businessSubscription?: BusinessSubscription | null;
 }
 
 export interface BusinessStaff {
@@ -481,30 +483,58 @@ export interface ProgressLog {
 
 export interface DietPlan {
   id: string;
-  trainerId: string;
-  memberId: string;
-  businessId: string;
-  content: {
-    meals?: {
-      time: string;
-      name: string;
-      calories?: number;
-      items: string[];
-      notes?: string;
-    }[];
-    notes?: string;
-    guidelines?: string[];
+  trainerId?: string;
+  memberId?: string;
+  businessId?: string;
+  title?: string;
+  goal?: string;
+  dailyCalories?: number;
+  startDate?: string;
+  endDate?: string;
+  notes?: string;
+  macros?: {
+    protein?: string;
+    carbs?: string;
+    fats?: string;
   };
-  createdAt: string;
+  meals?: {
+    mealType?: string;
+    name?: string;
+    time?: string;
+    calories?: number;
+    foods?: {
+      name: string;
+      quantity?: string;
+    }[];
+    items?: string[];
+    notes?: string;
+  }[];
+  content?: {
+    title?: string;
+    goal?: string;
+    dailyCalories?: number;
+    targetCalories?: number;
+    macros?: {
+      protein?: string;
+      carbs?: string;
+      fats?: string;
+    };
+    meals?: any;
+    notes?: string;
+    guidelines?: string[] | string;
+  };
+  createdAt?: string;
   updatedAt: string;
   trainer?: {
     id: string;
+    name?: string;
     user?: {
       fullName: string;
     };
   };
   member?: {
     id: string;
+    name?: string;
     user?: {
       fullName: string;
     };

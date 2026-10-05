@@ -93,7 +93,7 @@ export default function MemberFavoritesPage() {
               Saved Gyms
             </span>
           </div>
-          <Link href="/">
+          <Link href="/member/gyms">
             <Button
               variant="secondary"
               size="md"
@@ -156,7 +156,7 @@ export default function MemberFavoritesPage() {
               Explore fitness centers in your district, view amenities, and tap the heart icon to save your preferred clubs here.
             </p>
           </div>
-          <Link href="/">
+          <Link href="/member/gyms">
             <Button variant="primary" size="md" className="rounded-2xl gap-2 shadow-md">
               <Dumbbell className="w-4 h-4" />
               Explore Gym Directory
